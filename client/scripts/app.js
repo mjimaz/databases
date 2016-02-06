@@ -106,8 +106,7 @@ var app = {
       app.$chats.animate({
         scrollTop: scrollTop
       });
-    }
-    else {
+    } else {
       app.$chats.scrollTop(scrollTop);
     }
   },
@@ -142,8 +141,9 @@ var app = {
   },
 
   addMessage: function(data) {
-    if (!data.roomname)
+    if (!data.roomname){
       data.roomname = 'lobby';
+    }
 
     // Only add messages that are in our current room
     if (data.roomname === app.roomname) {
@@ -156,8 +156,9 @@ var app = {
       $username.text(data.username+': ').attr('data-username', data.username).attr('data-roomname',data.roomname).appendTo($chat);
 
       // Add the friend class
-      if (app.friends[data.username] === true)
+      if (app.friends[data.username] === true) {
         $username.addClass('friend');
+      }
 
       var $message = $('<br><span/>');
       $message.text(data.text).appendTo($chat);
@@ -200,8 +201,7 @@ var app = {
         // Fetch messages again
         app.fetch();
       }
-    }
-    else {
+    } else {
       app.startSpinner();
       // Store as undefined for empty names
       app.roomname = app.$roomSelect.val();

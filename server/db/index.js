@@ -6,3 +6,21 @@ var mysql = require('mysql');
 
 
 // insert into messages table in chat database
+
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : 'lowsamaht',
+  database : 'chat'
+});
+ 
+module.exports.insert = function() {
+  connection.connect();
+ 
+  connection.query('DESCRIBE messages', function(err, rows) {
+    if (err) { throw err };
+    console.log('USERS: ', rows[0]);
+  });
+ 
+  connection.end();
+};
