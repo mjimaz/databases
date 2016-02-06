@@ -10,23 +10,39 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  password : 'lowsamaht',
+  password : '123',
   database : 'chat'
 });
  
-module.exports.insert = function(messages) {
-  var username = messages.username;
-  var message = messages.text;
-  var room = messages.roomname;
+module.exports = {
 
-  connection.connect();
+  connection: connection,
 
-  // !! insert using SET for OBJ or [] with corresponding ?
- 
-  connection.query('INSERT into messages (userid, username, message, roomname) VALUES (1, "' + username + '", "' + message + '", "' + room + '");', function(err) {
-    if (err) { throw err; }
-    console.log('success insertion');
-  });
- 
-  connection.end();
+  createuser: function(user) {
+    var username = user.username;
+    console.log('create user', user);
+  
+    connection.query('INSERT into users (username) values (?)', [username]);
+  },
+
+  insert: function(messages) {
+    console.log('calling insert');
+    var username = messages.username;
+    var message = messages.message;
+    var room = messages.roomname;
+
+    // !! insert using SET for OBJ or [] with corresponding ?
+    connection.query('SELECT userid from users where username = ?;', [username], function(err, rows){
+      if(err) { throw err; }
+      var temp = rows[0]['userid'];
+      var query = 'INSERT into messages (userid, message, roomname) VALUES ('+temp+', "'+message+'", "'+room+'");';
+      connection.query(query, function(err) {
+        if (err) { throw err; }
+        console.log('success insertion');
+      });
+    });
+  
+  },
+
+  
 };
