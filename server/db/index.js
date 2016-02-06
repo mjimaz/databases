@@ -39,8 +39,12 @@ module.exports = {
         console.log('success insertion');
       });
     });
-  
   },
 
-  
+  selectmessages: function(res) {
+    connection.query('SELECT * from messages;', function(err, rows){
+      if(err) { throw err; }
+      res.send({results: rows});
+    });
+  }
 };

@@ -3,9 +3,7 @@ var models = require('../models');
 module.exports = {
   messages: {
     get: function (req, res) {
-      models.messages.get(req.body);
-      console.log('messages GET', req.body);
-      res.send(req.body);
+      models.messages.get(res);
     }, // a function which handles a get request for all messages
     post: function (req, res) { // a function which handles posting a message to the database
       models.messages.post(req.body);
@@ -22,4 +20,3 @@ module.exports = {
     }
   }
 };
-
