@@ -7,7 +7,7 @@ module.exports = {
       //using the input parameter
 
       console.log('models=',messages);
-      db.insert();
+      db.insert(messages);
 
     } // a function which can be used to insert a message into the database
   },

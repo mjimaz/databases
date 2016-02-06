@@ -14,12 +14,18 @@ var connection = mysql.createConnection({
   database : 'chat'
 });
  
-module.exports.insert = function() {
+module.exports.insert = function(messages) {
+  var username = messages.username;
+  var message = messages.text;
+  var room = messages.roomname;
+
   connection.connect();
+
+  // !! insert using SET for OBJ or [] with corresponding ?
  
-  connection.query('DESCRIBE messages', function(err, rows) {
-    if (err) { throw err };
-    console.log('USERS: ', rows[0]);
+  connection.query('INSERT into messages (userid, username, message, roomname) VALUES (1, "' + username + '", "' + message + '", "' + room + '");', function(err) {
+    if (err) { throw err; }
+    console.log('success insertion');
   });
  
   connection.end();
