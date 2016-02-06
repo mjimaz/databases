@@ -20,8 +20,6 @@ module.exports = {
 
   createuser: function(user) {
     var username = user.username;
-    console.log('create user', user);
-  
     connection.query('INSERT into users (username) values (?)', [username]);
   },
 
